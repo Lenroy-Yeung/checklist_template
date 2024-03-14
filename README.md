@@ -8,7 +8,7 @@ This GitHub workflow is designed to automatically check if a pull request includ
 
 The workflow YAML file (`pull_request_template_check.yaml`)
 
-1. **check_template**: Checks if the `pull_request_template.md` file exists and contains all the required checkmarks.
+1. **Check_template**: Checks if the `pull_request_template.md` file exists and contains all the required checkmarks.
 
 ## Usage
 
