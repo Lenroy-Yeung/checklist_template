@@ -15,7 +15,7 @@ jobs:
 
       - name: Check if Pull Request Template is complete
         run: |
-          template_path=".github/pull_request_template.md"
+          template_path=".github/PULL_REQUEST_TEMPLATE.md"
           if ! grep -q "[x]" "$template_path"; then
             echo "Error: Pull Request Template is incomplete. Please ensure all checkboxes are checked."
             exit 1
