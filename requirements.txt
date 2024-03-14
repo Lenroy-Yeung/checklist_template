@@ -1,2 +1,0 @@
-pip install --upgrade pip
-PyGithub==1.55
