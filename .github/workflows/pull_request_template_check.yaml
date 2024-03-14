@@ -17,6 +17,9 @@ jobs:
         run: |
           template_path="PULL_REQUEST_TEMPLATE.md"
           if ! grep -q "\[ \]" "$template_path"; then
-            echo "Error: Pull Request Template is incomplete. Please ensure all checkboxes are checked."
+            echo "All checkmarks present in pull request template."
+            exit 0
+          else
+            echo "Some checkmarks are missing in pull request template."
             exit 1
           fi
