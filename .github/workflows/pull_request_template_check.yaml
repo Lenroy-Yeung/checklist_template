@@ -12,11 +12,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: npm install @actions/http-client @actions/core
+
       - name: Check if PR template has all checkmarks
         run: |
-          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                    -H "Accept: application/vnd.github.v3+json" \
-                    ${{ github.api_url }}/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
-                    | jq -r '.body')
-          echo $PR_BODY
-          
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          CHECK_MARK_MISSING=$(node -e "
+            const http = require('@actions/http-client');
+            const url = '${PR_URL}';
+            
+            async function main() {
+              try {
+                const response = await new http.HttpClient().get(url);
+                const body = await response.readBody();
+                process.stdout.write(body.includes('[ ]') ? 'true' : 'false');
+              } catch (error) {
+                console.error(error);
+                process.exit(1);
+              }
+            }
+
+            main();
+          ")
+
+          if [ $CHECK_MARK_MISSING = "true" ]; then
+            echo "Some checkmarks are missing in the pull request window."
+            exit 1
+          else
+            echo "All checkmarks present in the pull request window."
+            exit 0
+          fi
