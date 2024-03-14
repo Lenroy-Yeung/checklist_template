@@ -23,8 +23,8 @@ jobs:
 
           # Check if all checkboxes are checked
           if [[ $PR_BODY != *"[ ]"* ]]; then
-            echo "All checkboxes are checked."
+            echo "$PR_BODY All checkboxes are checked."
           else
-            echo "Not all checkboxes are checked."
+            echo "$PR_BODY Not all checkboxes are checked."
             exit 1
           fi
