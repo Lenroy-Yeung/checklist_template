@@ -14,7 +14,7 @@ jobs:
           PR_URL="${{ github.event.pull_request.html_url }}"
           PR_HTML=$(curl -s "$PR_URL")
           
-          if echo "$PR_HTML" | grep -q "\[ \]"; then
+          if echo "$PR_HTML" | grep -q "[ ]"; then
             echo "Some checkmarks are missing in the pull request window."
             exit 1
           else
