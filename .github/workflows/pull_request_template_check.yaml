@@ -16,10 +16,10 @@ jobs:
       - name: Check if Pull Request Template is complete
         run: |
           template_path="PULL_REQUEST_TEMPLATE.md"
-          if ! grep -q "\[x\]" "$template_path"; then
-            echo "All checkmarks present in pull request template."
-            exit 0
-          else
+          if ! grep -q "\[ \]" "$template_path"; then
             echo "Some checkmarks are missing in pull request template."
             exit 1
+          else
+            echo "All checkmarks present in pull request template."
+            exit 0
           fi
