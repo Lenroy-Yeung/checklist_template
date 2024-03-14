@@ -1,25 +1,28 @@
-name: Pull Request Template Check
+name: Check Pull Request Template
 
 on:
   pull_request:
     types: [opened, edited, reopened]
 
 jobs:
-  check_pull_request_template:
-    name: Check Pull Request Template
+  check_template:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check if Pull Request Template is complete
+      - name: Check if PR template has all checkmarks
         run: |
-          template_path=$(<PULL_REQUEST_TEMPLATE.md)
-          if grep "\[ \]" PULL_REQUEST_TEMPLATE.md; then
-            echo "Some checkmarks are missing in pull request template."
-            exit 0
-          else
-            echo "All checkmarks present in pull request template."
+          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                    -H "Accept: application/vnd.github.v3+json" \
+                    ${{ github.api_url }}/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
+                    | jq -r '.body')
+          
+          if [[ $PR_BODY =~ \[ \] ]]; then
+            echo "Some checkmarks are missing in the pull request window."
             exit 1
+          else
+            echo "All checkmarks present in the pull request window."
+            exit 0
           fi
