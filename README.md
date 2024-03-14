@@ -21,3 +21,12 @@ To use this workflow in your GitHub repository:
 ## Contributing
 
 If you have any suggestions or improvements for this workflow, feel free to open an issue or submit a pull request.
+
+## Sample
+
+<img width="500" alt="Screenshot 2024-03-15 at 12 24 38 am" src="https://github.com/Lenroy-Yeung/checklist_template/assets/86452090/6898de49-7530-4cba-94bf-d70cb8192704">
+
+<img width="500" alt="Screenshot 2024-03-15 at 12 25 14 am" src="https://github.com/Lenroy-Yeung/checklist_template/assets/86452090/d3046174-e58b-4ea0-b94f-eddaa20a1562">
+
+<img width="500" alt="Screenshot 2024-03-15 at 12 25 40 am" src="https://github.com/Lenroy-Yeung/checklist_template/assets/86452090/f2aede5e-e091-4966-8873-655f63fac81a">
+
