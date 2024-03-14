@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r /.github/workflows/requirements.txt
 
       - name: Check if PR template is valid
         run: python check_pull_request_template.py
