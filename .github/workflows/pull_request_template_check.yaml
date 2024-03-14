@@ -1,23 +1,30 @@
-name: Check Pull Request Template
+name: Verify Checklist
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    types: [opened, edited, synchronize]
 
 jobs:
-  check_template:
+  verify_checklist:
+    name: Verify Checklist
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Check if PR template has all checkmarks
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Verify Checklist
         run: |
-          PR_URL="${{ github.event.pull_request.html_url }}"
-          PR_HTML=$(curl -s "$PR_URL")
-          
-          if echo "$PR_HTML" | grep "/[ /]"; then
-            echo "Some checkmarks are missing in the pull request window."
-            exit 1
+          # Get the PR number
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+
+          # Get the PR body
+          PR_BODY=$(curl -sSL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" | jq --raw-output .body)
+
+          # Check if all checkboxes are checked
+          if [[ $PR_BODY != *"[ ]"* ]]; then
+            echo "All checkboxes are checked."
           else
-            echo "All checkmarks present in the pull request window."
-            exit 0
+            echo "Not all checkboxes are checked."
+            exit 1
           fi
