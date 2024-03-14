@@ -11,7 +11,7 @@ def check_pull_request_template():
     repo = github_client.get_repo(repo_name)
     pr = repo.get_pull(int(pr_number))
 
-    template_file = repo.get_contents("pull_request_template.md")
+    template_file = repo.get_contents("PULL_REQUEST_TEMPLATE.md")
     template_content = template_file.decoded_content.decode()
 
     # Check if all checkboxes are checked
