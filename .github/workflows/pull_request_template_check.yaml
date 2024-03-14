@@ -18,8 +18,8 @@ jobs:
           template_path=$(<PULL_REQUEST_TEMPLATE.md)
           if grep "\[ \]" PULL_REQUEST_TEMPLATE.md; then
             echo "Some checkmarks are missing in pull request template."
-            exit 1
+            exit 0
           else
             echo "All checkmarks present in pull request template."
-            exit 0
+            exit 1
           fi
