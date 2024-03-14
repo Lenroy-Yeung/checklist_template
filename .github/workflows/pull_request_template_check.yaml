@@ -21,7 +21,7 @@ jobs:
       - name: Verify Checklist
         run: |
           checklist="${{ steps.extract.outputs.checklist }}"
-          if [ -z "$checklist" ]; then
+          if [[ "$checklist" = '[ ]' ]]; then
             echo "$checklist Not all checkboxes are checked."
             exit 1
           else
