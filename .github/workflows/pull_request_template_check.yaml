@@ -1,0 +1,22 @@
+name: Pull Request Template Check
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  check_pull_request_template:
+    name: Check Pull Request Template
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check if Pull Request Template is complete
+        run: |
+          template_path=".github/pull_request_template.md"
+          if ! grep -q "\[x\]" "$template_path"; then
+            echo "Error: Pull Request Template is incomplete. Please ensure all checkboxes are checked."
+            exit 1
+          fi
