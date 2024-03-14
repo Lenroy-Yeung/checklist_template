@@ -1,22 +1,28 @@
-name: Pull Request Template Check
+name: Check Pull Request Template
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    types: [opened, edited, synchronize]
 
 jobs:
-  check_pull_request_template:
+  check-template:
     name: Check Pull Request Template
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Check if Pull Request Template is complete
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
         run: |
-          template_path=".github/PULL_REQUEST_TEMPLATE.md"
-          if ! grep -q "[x]" "$template_path"; then
-            echo "Error: Pull Request Template is incomplete. Please ensure all checkboxes are checked."
-            exit 1
-          fi
+          pip install -r requirements.txt
+
+      - name: Check if PR template is valid
+        run: python check_pull_request_template.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
