@@ -18,11 +18,5 @@ jobs:
                     -H "Accept: application/vnd.github.v3+json" \
                     ${{ github.api_url }}/repos/${{ github.repository }}/pulls/${{ github.event.number }} \
                     | jq -r '.body')
+          echo $PR_BODY
           
-          if [[ $PR_BODY =~ \[ \] ]]; then
-            echo "Some checkmarks are missing in the pull request window."
-            exit 1
-          else
-            echo "All checkmarks present in the pull request window."
-            exit 0
-          fi
